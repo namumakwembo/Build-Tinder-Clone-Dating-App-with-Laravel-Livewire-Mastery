@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer components{
+
+    .bg-tinder{
+
+        @apply bg-gradient-to-r from-pink-500 via-red-500 to-rose-500;
+    }
+
+
+}
