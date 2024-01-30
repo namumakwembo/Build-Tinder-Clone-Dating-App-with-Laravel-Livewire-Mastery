@@ -2,18 +2,67 @@
 
     <div class="relative h-full  md:h-[600px] w-full md:w-96 m-auto">
 
+    @for ($i = 0; $i < 4; $i++) 
+        
+        <div 
+        
+        @swipedright.window="console.log('right')"
+        @swipedleft.window="console.log('left')"
+        @swipedup.window="console.log('up')"
 
 
-        @for ($i = 0; $i < 4; $i++)
-            
-      
-        <div x-data="{
+        x-data="{
                 isSwiping:false,
                 swipingLeft:false,
                 swipingRight:false,
                 swipingUp:false,
-            }" 
+                swipeRight: function(){
 
+                    moveOutWidth= document.body.clientWidth *1.5;
+
+                    $el.style.transform= 'translate(' +moveOutWidth+ 'px, -100px ) rotate(-30deg)';
+
+                    setTimeout(()=>{
+
+                        $el.remove();
+                    },300);
+
+                    {{-- dispatch --}}
+                    $dispatch('swipedright');
+
+
+                },
+                swipeLeft: function(){
+
+                    moveOutWidth= document.body.clientWidth *1.5;
+
+                    $el.style.transform= 'translate(' + -moveOutWidth+ 'px, -100px ) rotate(-30deg)';
+
+                    setTimeout(()=>{
+                        $el.remove();
+                    },300);
+
+                    {{-- dispatch --}}
+                    $dispatch('swipedleft');
+
+
+                },
+                swipeUp: function(){
+
+                    moveOutWidth= document.body.clientWidth *1.5;
+
+                    $el.style.transform= 'translate(0px,'+ -moveOutWidth + 'px) rotate(-20deg)' ;
+
+                    setTimeout(()=>{
+                        $el.remove();
+                    },300);
+
+                    {{-- dispatch --}}
+                    $dispatch('swipedup');
+
+
+                }
+            }" 
             x-init="
              
             element= $el;
@@ -21,7 +70,7 @@
             {{-- initialize hammer.js --}}
             var hammertime= new Hammer(element);
 
-            {{-- let pan support all directions --}}
+            {{-- lets pan support all directions --}}
             hammertime.get('pan').set({
                 direction: Hammer.DIRECTION_ALL,
                 touchAction:'pan'
@@ -156,13 +205,11 @@
 
             });
 
-            "
-            
+            " 
             :class="{'transform-none cursor-grab':isSwiping}"
             class="absolute inset-0 m-auto transform ease-in-out duration-300 rounded-xl  cursor-pointer z-50 ">
 
             <div class="h-full w-full">
-
 
                 <div style="background-image: url('https://source.unsplash.com/500x500?face-woman-{{$i}}')"
                     class="relative overflow-hidden w-full h-full rounded-xl bg-cover">
@@ -187,7 +234,6 @@
                     </div>
 
                     {{-- information and actions --}}
-
                     <section
                         class="absolute inset-x-0 bottom-0 inset-y-1/2 py-2 bg-gradient-to-t from-black to-black/0 pointer-events-none">
 
@@ -251,7 +297,9 @@
 
                                 {{-- swipe left --}}
                                 <div>
-                                    <button draggable="false"
+                                    <button 
+                                        draggable="false"
+                                        @click="swipeLeft()"
                                         class="rounded-full border-2 pointer-events-auto group border-red-600 p-2 shrink-0 max-w-fit flex items-center text-red-600  ">
 
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -268,7 +316,9 @@
 
                                 {{-- Super Like --}}
                                 <div>
-                                    <button draggable="false"
+                                    <button 
+                                        draggable="false"
+                                        @click="swipeUp()"
                                         class="rounded-full border-2 pointer-events-auto group border-blue-600 p-1.5 shrink-0 max-w-fit flex items-center text-blue-600 scale-95 ">
 
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -283,33 +333,40 @@
 
                                 </div>
 
-                                {{-- Swipe Right  --}}
+                                {{-- Swipe Right --}}
                                 <div>
-                                    <button draggable="false"
+                                    <button 
+                                        draggable="false"
+                                        @click="swipeRight()"
                                         class="rounded-full border-2 pointer-events-auto group border-green-600 p-2 shrink-0 max-w-fit flex items-center text-green-600   ">
 
-                                     
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10 shrink-0 m-auto group-hover:scale-105 transition-transform ">
-                                            <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
-                                          </svg>
-                                          
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                            class="w-10 h-10 shrink-0 m-auto group-hover:scale-105 transition-transform ">
+                                            <path
+                                                d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
+                                        </svg>
+
 
                                     </button>
 
                                 </div>
 
-                                   {{-- Swipe Right  --}}
-                                   <div>
+                                {{-- Swipe Right --}}
+                                <div>
                                     <button draggable="false"
                                         class="rounded-full border-2 pointer-events-auto group border-purple-600 p-2 shrink-0 max-w-fit flex items-center text-purple-600   ">
 
-                                     
 
-                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10 shrink-0 m-auto group-hover:scale-105 transition-transform ">
-                                        <path fill-rule="evenodd" d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143Z" clip-rule="evenodd" />
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                            class="w-10 h-10 shrink-0 m-auto group-hover:scale-105 transition-transform ">
+                                            <path fill-rule="evenodd"
+                                                d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143Z"
+                                                clip-rule="evenodd" />
                                         </svg>
 
-                                          
+
 
                                     </button>
 
@@ -330,7 +387,7 @@
 
         </div>
 
-        @endfor
+    @endfor
 
-    </div>
+</div>
 </div>
