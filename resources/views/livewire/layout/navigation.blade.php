@@ -23,7 +23,7 @@ new class extends Component
             <div class="flex w-full">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}" wire:navigate>
+                    <a href="{{ route('app') }}" wire:navigate>
                         <svg class="w-10 h-10 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="tinder"><path fill="currentColor" stroke="none" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M3.588 13.923c-1.615-1.675-1.424-4.42.517-7.43.353-.548.718-1.045 1.14-1.551l.35-.421.034.376c.053.589.131.911.308 1.28.111.231.294.48.373.552.061.056.032.087.338-.072 2.016-1.125 2.224-2.961 2.11-4.541-.04-.464-.14-.98-.264-1.36C8.448.61 8.421.495 8.436.5c.014.005.265.248.558.54 2.796 2.79 4.308 5.713 4.505 8.703.061 3.427-1.849 5.254-4.629 5.643-2.373.375-4.012-.19-5.282-1.463z"></path>
                         </svg>
                     </a>
@@ -31,19 +31,19 @@ new class extends Component
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 md:flex">
-                    <x-nav-link class="text-xl font-bold text-white hover:text-white/95" :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
+                    <x-nav-link class="text-xl font-bold text-white hover:text-white/95" :href="route('app')" :active="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Products') }}
                     </x-nav-link>
-                    <x-nav-link class="text-xl font-bold text-white hover:text-white/95" :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
+                    <x-nav-link class="text-xl font-bold text-white hover:text-white/95" :href="route('app')" :active="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Learn') }}
                     </x-nav-link>
-                    <x-nav-link class="text-xl font-bold text-white hover:text-white/95" :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
+                    <x-nav-link class="text-xl font-bold text-white hover:text-white/95" :href="route('app')" :active="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Safety') }}
                     </x-nav-link>
-                    <x-nav-link class="text-xl font-bold text-white hover:text-white/95" :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
+                    <x-nav-link class="text-xl font-bold text-white hover:text-white/95" :href="route('app')" :active="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Support') }}
                     </x-nav-link>
-                    <x-nav-link class="text-xl font-bold text-white hover:text-white/95" :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
+                    <x-nav-link class="text-xl font-bold text-white hover:text-white/95" :href="route('app')" :active="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Download') }}
                     </x-nav-link>
                 </div>
@@ -82,19 +82,19 @@ new class extends Component
    
         <!-- Responsive Settings Options -->
             <div class="mt-3 space-y-1  flex flex-col gap-5 p-2 pt-2 pb-3">
-                <x-nav-link class="text-xl font-bold text-white hover:text-white/95" :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
+                <x-nav-link class="text-xl font-bold text-white hover:text-white/95" :href="route('app')" :active="request()->routeIs('dashboard')" wire:navigate>
                     {{ __('Products') }}
                 </x-nav-link>
-                <x-nav-link class="text-xl font-bold text-white hover:text-white/95" :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
+                <x-nav-link class="text-xl font-bold text-white hover:text-white/95" :href="route('app')" :active="request()->routeIs('dashboard')" wire:navigate>
                     {{ __('Learn') }}
                 </x-nav-link>
-                <x-nav-link class="text-xl font-bold text-white hover:text-white/95" :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
+                <x-nav-link class="text-xl font-bold text-white hover:text-white/95" :href="route('app')" :active="request()->routeIs('dashboard')" wire:navigate>
                     {{ __('Safety') }}
                 </x-nav-link>
-                <x-nav-link class="text-xl font-bold text-white hover:text-white/95" :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
+                <x-nav-link class="text-xl font-bold text-white hover:text-white/95" :href="route('app')" :active="request()->routeIs('dashboard')" wire:navigate>
                     {{ __('Support') }}
                 </x-nav-link>
-                <x-nav-link class="text-xl font-bold text-white hover:text-white/95" :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
+                <x-nav-link class="text-xl font-bold text-white hover:text-white/95" :href="route('app')" :active="request()->routeIs('dashboard')" wire:navigate>
                     {{ __('Download') }}
                 </x-nav-link>
       

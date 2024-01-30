@@ -81,7 +81,7 @@
                         <aside class="px-2 " x-show="tab=='1'">
                             <div class="grid grid-cols-3 gap-2">
 
-                                @for ($i = 0; $i < 18; $i++)
+                                @for ($i = 0; $i < 3; $i++)
                                                    
                                 <div class="relative">
 
@@ -110,7 +110,7 @@
                         {{-- Messages --}}
                         <aside x-cloak  x-show="tab=='2'">
                             <ul>
-                                @for ($i = 0; $i < 7; $i++)         
+                                @for ($i = 0; $i < 2; $i++)         
                              
                                 <li>
                                     <a 
@@ -162,7 +162,7 @@
             </aside>
  
             <!-- Page Content -->
-            <main class="flex-1 flex-col  overflow-y-auto p-5  flex">
+            <main class="flex-1 flex-col  overflow-y-auto  flex">
                 {{ $slot }}
             </main>
         </div>
