@@ -15,6 +15,19 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+
+            //new data
+            $table->string('about')->nullable();
+            $table->timestamp('boosted_until')->nullable();
+            $table->string('profession')->nullable();
+            $table->string('university')->nullable();
+            $table->string('city')->nullable();
+            $table->unsignedFloat('height')->nullable();
+            $table->unsignedBigInteger('age')->nullable();
+
+           // $table->enum('relationship_goals',['new friends','another'])->nullable();
+            $table->string('relationship_goals')->nullable();//create enum class
+
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

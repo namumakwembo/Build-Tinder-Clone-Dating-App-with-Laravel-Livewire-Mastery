@@ -432,9 +432,7 @@
 
             </div>
 
-
             {{-- profile card --}}
-
             <div
              x-cloak
              x-show="profile"
@@ -656,8 +654,7 @@
 
 
             </div>
-
-
+            
     </div>
 
     @endfor
