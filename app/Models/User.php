@@ -81,4 +81,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Basic::class,'basic_user');
         
     }
+
+    function languages() : BelongsToMany {
+
+        return $this->belongsToMany(Language::class,'language_user');
+        
+    }
 }

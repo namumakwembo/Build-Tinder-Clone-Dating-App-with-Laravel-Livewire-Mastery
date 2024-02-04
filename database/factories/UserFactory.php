@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Enums\RelationshipGoalsEnum;
+use App\Models\Language;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -47,6 +49,31 @@ class UserFactory extends Factory
 
         ];
     }
+
+    /* configure the model  */
+
+     public function configure() : static {
+
+        return $this->afterCreating(function(User $user){
+
+                $languages = Language::limit(rand(1,4))->inRandomOrder()->get();
+
+                foreach ($languages as $key => $language) {
+
+                    $user->languages()->attach($language);
+
+                }
+
+
+
+
+        });
+
+
+        
+    }
+
+
 
     /**
      * Indicate that the model's email address should be unverified.
