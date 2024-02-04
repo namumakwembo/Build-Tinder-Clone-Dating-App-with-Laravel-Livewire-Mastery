@@ -9,6 +9,7 @@
             @swipedright.window="console.log('right')"
             @swipedleft.window="console.log('left')" 
             @swipedup.window="console.log('up')"
+            wire:key="swipe-{{$user->id}}"
             x-data="{
                 profile:false,
                 isSwiping:false,
@@ -27,7 +28,7 @@
                     },300);
 
                     {{-- dispatch --}}
-                    $dispatch('swipedright');
+                    $dispatch('swipedright',{user:'{{$user->id}}'});
 
 
                 },
@@ -42,7 +43,7 @@
                     },300);
 
                     {{-- dispatch --}}
-                    $dispatch('swipedleft');
+                    $dispatch('swipedleft',{user:'{{$user->id}}'});
 
 
                 },
@@ -57,7 +58,7 @@
                     },300);
 
                     {{-- dispatch --}}
-                    $dispatch('swipedup');
+                    $dispatch('swipedup',{user:'{{$user->id}}'});
 
 
                 }
@@ -175,7 +176,7 @@
                         if(event.deltaX >20){
 
                             event.target.style.transform= 'translate(' + moveOutWidth +'px, 10px)';
-                            $dispatch('swipedright');
+                            $dispatch('swipedright',{user:'{{$user->id}}'});
 
                         }
 
@@ -183,14 +184,14 @@
                         else if(event.deltaX < -20){
 
                             event.target.style.transform= 'translate(' + -moveOutWidth +'px, 10px)';
-                            $dispatch('swipedleft');
+                            $dispatch('swipedleft',{user:'{{$user->id}}'});
 
                         }
 
                         else if(event.deltaY  <- 50 && Math.abs(event.deltaX)<20 ){
 
                             event.target.style.transform= 'translate(0px,' +  -moveOutHeight + 'px)';
-                            $dispatch('swipedup');
+                            $dispatch('swipedup',{user:'{{$user->id}}'});
 
                         }
 
@@ -552,7 +553,7 @@
                     <div class="text-3xl"> 👋 </div>
                     <div class="grid w-4/5">
                         <span class="font-bold text-sm text-green-800">Looking for  </span>
-                        <span class="text-lg text-green-800 capitalize"> {{str_replace('_',' ',$user->relationship_goals->value)}} </span>
+                        <span class="text-lg text-green-800 capitalize"> {{str_replace('_',' ',$user->relationship_goals?->value)}} </span>
 
                     </div>
                  </div>

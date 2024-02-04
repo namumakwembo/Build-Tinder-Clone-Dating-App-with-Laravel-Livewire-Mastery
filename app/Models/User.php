@@ -8,6 +8,7 @@ use App\Enums\BasicGroupEnum;
 use App\Enums\RelationshipGoalsEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -87,4 +88,46 @@ class User extends Authenticatable
         return $this->belongsToMany(Language::class,'language_user');
         
     }
+
+
+    /* Swipe model relationships */
+
+    /* user has many swipes */
+
+    function swipes() : HasMany {
+
+        return $this->hasMany(Swipe::class,'user_id');
+    }
+
+    /* allows to check if user has swiped with another user  */
+    function hasSwiped (User $user,$type=null) : bool {
+
+        $query= $this->swipes()->where('swiped_user_id',$user->id);
+
+        if ($type !==null) {
+
+            $query->where('type',$type);
+        }
+
+        return $query->exists();
+        
+    }
+
+    /* exclude users who has already been swiped by the auth user  */
+    function scopeWhereNotSwiped($query) {
+
+        //Exclude the users whose IDs are in the result of the subquery
+        return $query->whereNotIn('id',function($subquery){
+
+            //select the swiped_user_id from the swipes table where the 
+            // user_id is the the auth id
+            $subquery->select('swiped_user_id')
+                    ->from('swipes')
+                    ->where('user_id',auth()->id());
+
+        });
+        
+    }
+
+
 }
