@@ -2,15 +2,11 @@
 
     <div class="relative h-full  md:h-[600px] w-full md:w-96 m-auto">
 
-         
+
         @foreach ($users as $i=> $user)
-            
-        <div 
-            @swipedright.window="console.log('right')"
-            @swipedleft.window="console.log('left')" 
-            @swipedup.window="console.log('up')"
-            wire:key="swipe-{{$user->id}}"
-            x-data="{
+
+        <div @swipedright.window="console.log('right')" @swipedleft.window="console.log('left')"
+            @swipedup.window="console.log('up')" wire:key="swipe-{{$user->id}}" x-data="{
                 profile:false,
                 isSwiping:false,
                 swipingLeft:false,
@@ -62,8 +58,7 @@
 
 
                 }
-               }" 
-            x-init="
+               }" x-init="
                 
                 element= $el;
 
@@ -205,15 +200,12 @@
 
                 });
 
-            " 
-            :class="{'transform-none cursor-grab':isSwiping}"
+            " :class="{'transform-none cursor-grab':isSwiping}"
             class="absolute inset-0 m-auto transform ease-in-out duration-300 rounded-xl  cursor-pointer z-50 ">
 
             {{-- swipe card --}}
-            <div  
-              x-show="!profile"
-              x-transition.duration.150ms.origin.bottom
-             class="relative overflow-hidden w-full h-full rounded-xl bg-cover bg-white">
+            <div x-show="!profile" x-transition.duration.150ms.origin.bottom
+                class="relative overflow-hidden w-full h-full rounded-xl bg-cover bg-white">
 
                 @php
                 $slides=['https://source.unsplash.com/500x500?face-woman-'.rand(1,20),'https://source.unsplash.com/500x500?face-woman-'.rand(1,20),'https://source.unsplash.com/500x500?face-woman-'.rand(1,20),]
@@ -230,9 +222,7 @@
                     </template>
 
                     {{-- pagination --}}
-                    <div 
-                    draggable="true"
-                    :class="{'hidden':slides.length==1}"
+                    <div draggable="true" :class="{'hidden':slides.length==1}"
                         class="absolute top-1 inset-x-0 z-10 w-full flex items-center justify-center">
 
                         <template x-for="(image,index) in slides" :key="index">
@@ -265,9 +255,10 @@
                         @click="activeSlide = activeSlide === slides.length ? 1 : activeSlide +1"
                         class="absolute right-2 top-1/2 my-auto ">
 
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-6 h-6 text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
+                            stroke="currentColor" class="w-6 h-6 text-white">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                          </svg>
+                        </svg>
 
 
                     </button>
@@ -305,7 +296,7 @@
                                 </h4>
 
                                 <p class="text-lg line-clamp-3">
-                                   {{$user->about}}
+                                    {{$user->about}}
                                 </p>
 
                             </div>
@@ -434,180 +425,182 @@
             </div>
 
             {{-- profile card --}}
-            <div
-             x-cloak
-             x-show="profile"
-             x-transition.duration.150ms.origin.top
-             draggable="true"
-             style="contain: content"
-             class="absolute inset-0 overflow-y-auto overflow-hidden overscroll-contain border rounded-xl bg-white space-y-4">
+            <div x-cloak x-show="profile" x-transition.duration.150ms.origin.top draggable="true"
+                style="contain: content"
+                class="absolute inset-0 overflow-y-auto overflow-hidden overscroll-contain border rounded-xl bg-white space-y-4">
 
 
-             @php
-             $slides=['https://source.unsplash.com/500x500?face-woman-'.rand(1,20),'https://source.unsplash.com/500x500?face-woman-'.rand(1,20),'https://source.unsplash.com/500x500?face-woman-'.rand(1,20),]
-             @endphp
+                @php
+                $slides=['https://source.unsplash.com/500x500?face-woman-'.rand(1,20),'https://source.unsplash.com/500x500?face-woman-'.rand(1,20),'https://source.unsplash.com/500x500?face-woman-'.rand(1,20),]
+                @endphp
 
-             {{-- Carousel section --}}
-             <section class="relative  h-96" x-data="{activeSlide:1, slides:@js($slides)}">
+                {{-- Carousel section --}}
+                <section class="relative  h-96" x-data="{activeSlide:1, slides:@js($slides)}">
 
-                 {{-- Slides --}}
-                 <template x-for="(image,index) in slides" :key="index">
-                     <img x-show="activeSlide===index + 1" :src="image" alt="image"
-                         class="absolute inset-0 pointer-events-none w-full h-full object-cover">
+                    {{-- Slides --}}
+                    <template x-for="(image,index) in slides" :key="index">
+                        <img x-show="activeSlide===index + 1" :src="image" alt="image"
+                            class="absolute inset-0 pointer-events-none w-full h-full object-cover">
 
-                 </template>
+                    </template>
 
-                 {{-- pagination --}}
-                 <div 
-                 draggable="true"
-                 :class="{'hidden':slides.length==1}"
-                     class="absolute top-1 inset-x-0 z-10 w-full flex items-center justify-center">
+                    {{-- pagination --}}
+                    <div draggable="true" :class="{'hidden':slides.length==1}"
+                        class="absolute top-1 inset-x-0 z-10 w-full flex items-center justify-center">
 
-                     <template x-for="(image,index) in slides" :key="index">
+                        <template x-for="(image,index) in slides" :key="index">
 
-                         <button @click="activeSlide=index+1"
-                             :class="{'bg-white':activeSlide===index +1,'bg-gray-500':activeSlide !== index+1}"
-                             class="flex-1 w-4 h-2 mx-1 rounded-full overflow-hidden">
+                            <button @click="activeSlide=index+1"
+                                :class="{'bg-white':activeSlide===index +1,'bg-gray-500':activeSlide !== index+1}"
+                                class="flex-1 w-4 h-2 mx-1 rounded-full overflow-hidden">
 
-                         </button>
-                     </template>
+                            </button>
+                        </template>
 
-
-                 </div>
-
-                 {{-- Prev button --}}
-                 <button draggable="true" :class="{'hidden':slides.length==1}"
-                     @click="activeSlide = activeSlide ===1? slides.length:activeSlide-1"
-                     class="absolute left-2 top-1/2 my-auto ">
-
-                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
-                         stroke="currentColor" class="w-6 h-6 text-white">
-                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-                     </svg>
-
-
-                 </button>
-
-                 {{-- Next button --}}
-                 <button draggable="true" :class="{'hidden':slides.length==1}"
-                     @click="activeSlide = activeSlide === slides.length ? 1 : activeSlide +1"
-                     class="absolute right-2 top-1/2 my-auto ">
-
-                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-6 h-6 text-white">
-                         <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                       </svg>
-                 </button>
-
-                 {{-- close profile button --}}
-
-                 <button @click="profile=false" class="absolute -bottom-4 right-3 bg-tinder p-3 hover:scale-110 transition-transform rounded-full max-w-fit max-h-fit text-white ">
-
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
-                      </svg>
-                      
-
-                 </button>
-
-
-             </section>
-
-
-             {{-- profile information --}}
-
-             <section class="grid gap-4 p-3">
-
-                <div class="flex items-center text-3xl gap-3 text-wrap">
-                    <h3 class="font-bold"> {{$user->name}} </h3>
-                    <span class="font-semibold text-gray-800">
-                        {{$user->age}}
-                    </span>
-                </div>
-
-                {{-- about --}}
-
-                <ul>
-                    <li class="items-center text-gray-600 text-lg">
-                        {{$user->profession}}
-                    </li>
-                    <li class="items-center text-gray-600 text-lg">
-                          {{$user->height?$user->height.' cm':''}}
-                    </li>
-                    <li class="items-center text-gray-600 text-lg">
-                        Lives in Spain
-                        {{$user->city?'Lives in '.$user->city:''}}
-                    </li>
-                </ul>
-
-                 <hr class="-mx-2.5">
-
-                 {{-- bio --}}
-
-                 <p class="text-gray-600">
-                    {{$user->about}}
-                </p>
-
-                 {{-- Relatioship goals --}}
-                 <div class="rounded-xl bg-green-200 h-24 px-4 py-2 max-w-fit flex gap-4 items-center">
-
-                    <div class="text-3xl"> 👋 </div>
-                    <div class="grid w-4/5">
-                        <span class="font-bold text-sm text-green-800">Looking for  </span>
-                        <span class="text-lg text-green-800 capitalize"> {{str_replace('_',' ',$user->relationship_goals?->value)}} </span>
 
                     </div>
-                 </div>
 
-                 {{-- More information --}}
-                 
-                 <section class="divide-y space-y-2">
+                    {{-- Prev button --}}
+                    <button draggable="true" :class="{'hidden':slides.length==1}"
+                        @click="activeSlide = activeSlide ===1? slides.length:activeSlide-1"
+                        class="absolute left-2 top-1/2 my-auto ">
 
-                    @if ($user->languages)
-                        
-                    <div class="spacey-y-3 py-2">
-                        <h3 class="font-bold text-xl py-2"> Languages i know </h3>
-                         <ul class="flex flex-wrap gap-3">
-                            @foreach ($user->languages as $language )
-                             <li class="border border-gray-500 rounded-2xl text-sm px-2.5 p-1.5 capitalize">{{$language->name}}</li>
-                            @endforeach
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
+                            stroke="currentColor" class="w-6 h-6 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                        </svg>
 
-                    
-                         </ul>
+
+                    </button>
+
+                    {{-- Next button --}}
+                    <button draggable="true" :class="{'hidden':slides.length==1}"
+                        @click="activeSlide = activeSlide === slides.length ? 1 : activeSlide +1"
+                        class="absolute right-2 top-1/2 my-auto ">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
+                            stroke="currentColor" class="w-6 h-6 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </button>
+
+                    {{-- close profile button --}}
+
+                    <button @click="profile=false"
+                        class="absolute -bottom-4 right-3 bg-tinder p-3 hover:scale-110 transition-transform rounded-full max-w-fit max-h-fit text-white ">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
+                        </svg>
+
+
+                    </button>
+
+
+                </section>
+
+
+                {{-- profile information --}}
+
+                <section class="grid gap-4 p-3">
+
+                    <div class="flex items-center text-3xl gap-3 text-wrap">
+                        <h3 class="font-bold"> {{$user->name}} </h3>
+                        <span class="font-semibold text-gray-800">
+                            {{$user->age}}
+                        </span>
                     </div>
-                    @endif
 
-                    @if ($user->basics)
-                    <div class="spacey-y-3 py-2">
-                        <h3 class="font-bold text-xl py-2"> Basics </h3>
-                         <ul class="flex flex-wrap gap-3">
-                            @foreach ($user->basics as $basic )
-                            <li class="border border-gray-500 rounded-2xl text-sm px-2.5 p-1.5">{{$basic->name}}</li>
-                            @endforeach
+                    {{-- about --}}
 
-                         </ul>
+                    <ul>
+                        <li class="items-center text-gray-600 text-lg">
+                            {{$user->profession}}
+                        </li>
+                        <li class="items-center text-gray-600 text-lg">
+                            {{$user->height?$user->height.' cm':''}}
+                        </li>
+                        <li class="items-center text-gray-600 text-lg">
+                            Lives in Spain
+                            {{$user->city?'Lives in '.$user->city:''}}
+                        </li>
+                    </ul>
+
+                    <hr class="-mx-2.5">
+
+                    {{-- bio --}}
+
+                    <p class="text-gray-600">
+                        {{$user->about}}
+                    </p>
+
+                    {{-- Relatioship goals --}}
+                    <div class="rounded-xl bg-green-200 h-24 px-4 py-2 max-w-fit flex gap-4 items-center">
+
+                        <div class="text-3xl"> 👋 </div>
+                        <div class="grid w-4/5">
+                            <span class="font-bold text-sm text-green-800">Looking for </span>
+                            <span class="text-lg text-green-800 capitalize"> {{str_replace('_','
+                                ',$user->relationship_goals?->value)}} </span>
+
+                        </div>
                     </div>
-                    @endif
 
-                    <div class="spacey-y-3 py-2">
-                        <h3 class="font-bold text-xl py-2"> Lifestyle </h3>
-                         <ul class="flex flex-wrap gap-3">
-                            <li class="border border-gray-500 rounded-2xl text-sm px-2.5 p-1.5">Non Smoker</li>
-                            <li class="border border-gray-500 rounded-2xl text-sm px-2.5 p-1.5">Gym</li>
-                            <li class="border border-gray-500 rounded-2xl text-sm px-2.5 p-1.5">Travel</li>
-                         </ul>
-                    </div>
+                    {{-- More information --}}
 
-                 </section>
+                    <section class="divide-y space-y-2">
 
+                        @if ($user->languages)
 
-
-
-             </section>
+                        <div class="spacey-y-3 py-2">
+                            <h3 class="font-bold text-xl py-2"> Languages i know </h3>
+                            <ul class="flex flex-wrap gap-3">
+                                @foreach ($user->languages as $language )
+                                <li class="border border-gray-500 rounded-2xl text-sm px-2.5 p-1.5 capitalize">
+                                    {{$language->name}}</li>
+                                @endforeach
 
 
-             {{-- Actions --}}
+                            </ul>
+                        </div>
+                        @endif
 
-             <section class="sticky bg-gradient-to-b from-white/50 to-white bottom-0 py-2 flex items-center justify-center gap-4 inset-x-0 mx-auto">
+                        @if ($user->basics)
+                        <div class="spacey-y-3 py-2">
+                            <h3 class="font-bold text-xl py-2"> Basics </h3>
+                            <ul class="flex flex-wrap gap-3">
+                                @foreach ($user->basics as $basic )
+                                <li class="border border-gray-500 rounded-2xl text-sm px-2.5 p-1.5">{{$basic->name}}
+                                </li>
+                                @endforeach
+
+                            </ul>
+                        </div>
+                        @endif
+
+                        <div class="spacey-y-3 py-2">
+                            <h3 class="font-bold text-xl py-2"> Lifestyle </h3>
+                            <ul class="flex flex-wrap gap-3">
+                                <li class="border border-gray-500 rounded-2xl text-sm px-2.5 p-1.5">Non Smoker</li>
+                                <li class="border border-gray-500 rounded-2xl text-sm px-2.5 p-1.5">Gym</li>
+                                <li class="border border-gray-500 rounded-2xl text-sm px-2.5 p-1.5">Travel</li>
+                            </ul>
+                        </div>
+
+                    </section>
+
+
+
+
+                </section>
+
+
+                {{-- Actions --}}
+
+                <section
+                    class="sticky bg-gradient-to-b from-white/50 to-white bottom-0 py-2 flex items-center justify-center gap-4 inset-x-0 mx-auto">
 
 
                     {{-- swipe left --}}
@@ -661,15 +654,95 @@
 
                     </div>
 
-             </section>
+                </section>
 
 
 
             </div>
-            
+
         </div>
         @endforeach
-    
 
-</div>
+
+    </div>
+
+    {{-- Match found --}}
+
+    <div 
+    x-data="{ modalOpen: false }" 
+    @keydown.escape.window="modalOpen = false" 
+    @match-found.window="modalOpen=true"
+    class="relative z-50 w-auto h-auto">
+          <template x-teleport="body">
+            <div x-show="modalOpen" class="fixed top-0 left-0 z-[99] flex items-center justify-center w-screen h-screen"
+                x-cloak>
+                <div x-show="modalOpen" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-300"
+                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" @click="modalOpen=false"
+                    class="absolute inset-0 w-full h-full bg-black bg-opacity-40"></div>
+                <div x-show="modalOpen" x-trap.inert.noscroll="modalOpen" x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    class="relative w-full py-6 bg-white px-7 h-full sm:h-[550px] sm:max-w-lg sm:rounded-lg">
+
+                    {{-- HEader --}}
+                    <div class=" items-center justify-between p-2 py-3 block">
+                        <button @click="modalOpen=false"
+                            class="absolute top-0 right-0 flex items-center justify-center w-8 h-8 mt-5 mr-5 text-gray-600 rounded-full hover:text-gray-800 hover:bg-gray-50">
+                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    {{-- Main --}}
+                    <main class="relative w-auto flex flex-col gap-y-9">
+
+                        <div class="mx-auto flex flex-col gap-2 items-center justify-center">
+                            {{-- tinder logo --}}
+                            <div class="mx-auto">
+                                <svg class="w-14 h-14 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="tinder"><path fill="currentColor" stroke="none" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M3.588 13.923c-1.615-1.675-1.424-4.42.517-7.43.353-.548.718-1.045 1.14-1.551l.35-.421.034.376c.053.589.131.911.308 1.28.111.231.294.48.373.552.061.056.032.087.338-.072 2.016-1.125 2.224-2.961 2.11-4.541-.04-.464-.14-.98-.264-1.36C8.448.61 8.421.495 8.436.5c.014.005.265.248.558.54 2.796 2.79 4.308 5.713 4.505 8.703.061 3.427-1.849 5.254-4.629 5.643-2.373.375-4.012-.19-5.282-1.463z"></path>
+                                </svg>
+                            </div>
+                            <h5 class="font-bold text-3xl">
+                                It's a Match
+                            </h5>
+                        </div>
+
+                        {{-- Show matches --}}
+
+                        <div class="flex items-center gap-4 mx-auto">
+                            <span>
+                                <img src="https://source.unsplash.com/200x200?face-1" alt="" class="rounded-full h-32 w-32 ring ring-rose-500">
+                            </span>
+
+                            <span>
+                                <img src="https://source.unsplash.com/200x200?face-2" alt="" class="rounded-full h-32 w-32 ring ring-pink-500/40">
+                            </span>
+                        </div>
+
+                        {{-- Actions --}}
+
+                        <div class="mx-auto flex flex-col gap-5">
+
+                            <button class="bg-tinder text-white font-bold items-center px-3 py-2 rounded-full">
+                                Send a message
+                            </button>
+
+                            <button @click="modalOpen=false" class="bg-gray-500 text-white font-bold items-center px-3 py-2 rounded-full">
+                                Continue Swiping
+                            </button>
+
+                        </div>
+
+
+                    </main>
+                </div>
+            </div>
+        </template>
+    </div>
 </div>

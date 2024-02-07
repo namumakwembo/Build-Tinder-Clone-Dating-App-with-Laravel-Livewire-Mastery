@@ -28,7 +28,7 @@ class User extends Authenticatable
     //     'password',
     // ];
 
-     protected $guarded=[];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -48,45 +48,41 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
-        'relationship_goals'=>RelationshipGoalsEnum::class
+        'relationship_goals' => RelationshipGoalsEnum::class
     ];
 
     //Boot method
 
-    protected static function boot(){
+    protected static function boot()
+    {
         parent::boot();
 
-        static::created(function($user){
+        static::created(function ($user) {
 
-            $basics= Basic::all();
+            $basics = Basic::all();
             //if wants children in the future
-            $basic = $basics->where('group',BasicGroupEnum::children)->first();
+            $basic = $basics->where('group', BasicGroupEnum::children)->first();
             $user->basics()->attach($basic);
 
 
             //zodiac
-            $basic = $basics->where('group',BasicGroupEnum::zodiac)->first();
+            $basic = $basics->where('group', BasicGroupEnum::zodiac)->first();
             $user->basics()->attach($basic);
-
-
-
         });
-
-
     }
 
 
 
-    function basics() : BelongsToMany {
+    function basics(): BelongsToMany
+    {
 
-        return $this->belongsToMany(Basic::class,'basic_user');
-        
+        return $this->belongsToMany(Basic::class, 'basic_user');
     }
 
-    function languages() : BelongsToMany {
+    function languages(): BelongsToMany
+    {
 
-        return $this->belongsToMany(Language::class,'language_user');
-        
+        return $this->belongsToMany(Language::class, 'language_user');
     }
 
 
@@ -94,40 +90,56 @@ class User extends Authenticatable
 
     /* user has many swipes */
 
-    function swipes() : HasMany {
+    function swipes(): HasMany
+    {
 
-        return $this->hasMany(Swipe::class,'user_id');
+        return $this->hasMany(Swipe::class, 'user_id');
     }
 
     /* allows to check if user has swiped with another user  */
-    function hasSwiped (User $user,$type=null) : bool {
+    function hasSwiped(User $user, $type = null): bool
+    {
 
-        $query= $this->swipes()->where('swiped_user_id',$user->id);
+        $query = $this->swipes()->where('swiped_user_id', $user->id);
 
-        if ($type !==null) {
+        if ($type !== null) {
 
-            $query->where('type',$type);
+            $query->where('type', $type);
         }
 
         return $query->exists();
-        
     }
 
     /* exclude users who has already been swiped by the auth user  */
-    function scopeWhereNotSwiped($query) {
+    function scopeWhereNotSwiped($query)
+    {
 
         //Exclude the users whose IDs are in the result of the subquery
-        return $query->whereNotIn('id',function($subquery){
+        return $query->whereNotIn('id', function ($subquery) {
 
             //select the swiped_user_id from the swipes table where the 
             // user_id is the the auth id
             $subquery->select('swiped_user_id')
-                    ->from('swipes')
-                    ->where('user_id',auth()->id());
-
+                ->from('swipes')
+                ->where('user_id', auth()->id());
         });
-        
     }
 
 
+    /* MATCH */
+
+    public function matches()
+    {
+        return $this->hasManyThrough(
+            SwipeMatch::class,
+            Swipe::class,
+            'user_id',
+            'swipe_id_1',
+            'id',
+            'id'
+        )->orWhereHas('swipe2', function ($query) {
+
+            $query->where('user_id', $this->id);
+        });
+    }
 }

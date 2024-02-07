@@ -32,4 +32,13 @@ class Swipe extends Model
         return $this->type=='up';
         
     }
+
+
+
+    /* has one */
+    public function match()
+    {
+        
+        return $this->hasOne(Swipe::class,'swipe_id_1')->orWhere('swipe_id_2',$this->getKey());
+    }
 }
