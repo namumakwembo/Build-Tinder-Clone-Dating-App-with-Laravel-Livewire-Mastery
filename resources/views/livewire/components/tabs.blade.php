@@ -37,7 +37,7 @@
                 @foreach ($matches as $i=> $match)
                     
                                       
-                   <div class="relative">
+                   <div wire:click="createConversation('{{$match->id}}')" class="relative cursor-pointer">
 
                        {{-- dot --}}
                        <span class="-top-6 -right-5 absolute">
@@ -53,7 +53,7 @@
                        {{-- name --}}
 
                        <h5 class="absolute rounded-lg bottom-2 bo left-2 text-white font-bold text-xs">
-                           {{$match->swipe1->user_id==auth()->id()?$match->swipe2->user->name:''}}
+                           {{$match->swipe1->user_id==auth()->id()?$match->swipe2->user->name:$match->swipe1->user->name }}
                        </h5>
                    </div>
 
