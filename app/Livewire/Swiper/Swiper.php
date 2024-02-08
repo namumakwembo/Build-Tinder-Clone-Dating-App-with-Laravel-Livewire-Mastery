@@ -2,14 +2,22 @@
 
 namespace App\Livewire\Swiper;
 
+use App\Models\Conversation;
 use App\Models\Swipe;
 use App\Models\SwipeMatch;
 use App\Models\User;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Swiper extends Component
 {
+
+    #[Locked]
+    public $currentMatchId;
+
+    #[Locked]
+    public $swipedUserId;
 
     #[On('swipedright')]
     function swipedRight(User $user)  {
@@ -49,6 +57,9 @@ class Swiper extends Component
 
     protected function createSwipe($user,$type){
 
+         #reset properties 
+         $this->reset('swipedUserId','currentMatchId');
+
         //return null if user is already swiped 
         if (auth()->user()->hasSwiped($user)) {
             return null;
@@ -66,24 +77,26 @@ class Swiper extends Component
         if ($type=='up'||$type=='right') {
 
             $authUserId=auth()->id();
-            $swipedUserId=$user->id;
+            $this->swipedUserId=$user->id;
 
 
             #now if swiped user also swiped on authenticated user 
-            $matchingSwipe= Swipe::where('user_id',$swipedUserId)
+            $matchingSwipe= Swipe::where('user_id',$this->swipedUserId)
                                     ->where('swiped_user_id',$authUserId)
                                     ->whereIn('type',['up','right'])
                                     ->first();
             
             #if true then create a match
             if ($matchingSwipe) {
-                SwipeMatch::create([
+               $match= SwipeMatch::create([
                     'swipe_id_1'=>$swipe->id,
                     'swipe_id_2'=>$matchingSwipe->id
                 ]);
                 # code...
                  //show match found
             $this->dispatch('match-found');
+
+            $this->currentMatchId=$match->id;
 
 
 
@@ -93,6 +106,24 @@ class Swiper extends Component
 
            
         }
+
+
+    }
+
+    public function createConversation(){
+
+        Conversation::create([
+            'sender_id'=>auth()->id(),
+            'receiver_id'=>$this->swipedUserId,
+            'match_id'=>$this->currentMatchId,
+        ]);
+
+
+        //dispatch an event
+        $this->dispatch('close-match-modal');
+
+        #reset properties 
+        $this->reset('swipedUserId','currentMatchId');
 
 
     }
