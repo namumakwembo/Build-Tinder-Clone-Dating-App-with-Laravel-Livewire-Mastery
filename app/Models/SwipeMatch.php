@@ -22,4 +22,10 @@ class SwipeMatch extends Model
         return $this->belongsTo(Swipe::class,'swipe_id_2','id');
         
     }
+
+    public function conversation()
+    {
+        return $this->hasOne(Conversation::class);
+        
+    }
 }
