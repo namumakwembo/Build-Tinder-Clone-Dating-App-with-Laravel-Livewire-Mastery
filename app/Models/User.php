@@ -142,4 +142,13 @@ class User extends Authenticatable
             $query->where('user_id', $this->id);
         });
     }
+
+    /* user can have many conversations */
+
+    public function conversations()
+    {
+        return $this->hasMany(Conversation::class,'sender_id')->orWhere('receiver_id',$this->id);
+        
+    }
+
 }

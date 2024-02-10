@@ -1,7 +1,7 @@
 <div>
     {{-- The whole world belongs to you. --}}
     <section 
-    x-data="{ tab:'1' }"
+    x-data="{ tab:{{request()->routeIs('chat.index')||request()->routeIs('chat')?'2':'1'}} }"
     @match-found.window="$wire.$refresh()"
     class="mb-auto overflow-y-auto overflow-x-scroll relative">
 
@@ -65,12 +65,13 @@
            {{-- Messages --}}
            <aside x-cloak  x-show="tab=='2'">
                <ul>
-                   @for ($i = 0; $i < 2; $i++)         
-                
+                        
+                    @foreach ($conversations as $i => $conversation )       
+                    
                    <li>
                        <a 
                         @class(['flex gap-4 items-center p-2','border-r-4 border-red-500 bg-white py-3'=>$i==3?true:false])
-                         href="#">
+                         href="{{route('chat',$conversation->id)}}">
 
                          <div class="relative">
 
@@ -95,8 +96,8 @@
                          </div>
 
                          <div class="overflow-hidden">
-                           <h6 class="font-bold truncate"> {{fake()->name}} </h6>
-                           <p class="text-gray-600 truncate"> {{fake()->text}} </p>
+                           <h6 class="font-bold truncate"> {{$conversation->getReceiver()->name}} </h6>
+                           <p class="text-gray-600 truncate"> {{$conversation->messages()?->latest()->first()?->body}} </p>
 
                          </div>
 
@@ -104,7 +105,9 @@
                        </a>
 
                    </li>
-                   @endfor
+                   @endforeach
+
+                   
 
                </ul>
            </aside>

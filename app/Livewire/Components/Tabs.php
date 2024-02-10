@@ -23,6 +23,7 @@ class Tabs extends Component
     public function render()
     {
         $matches = auth()->user()->matches()->get();
-        return view('livewire.components.tabs', ['matches' => $matches]);
+        $conversations= auth()->user()->conversations()->get();
+        return view('livewire.components.tabs', ['matches' => $matches,'conversations'=>$conversations]);
     }
 }
