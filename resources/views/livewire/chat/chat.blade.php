@@ -18,7 +18,7 @@
             <x-avatar />
 
             <h5 class="font-bold text-gray-500 truncate">
-                {{fake()->name}}
+                {{$receiver->name}}
             </h5>
 
             <div class="ml-auto flex items-center gap-2 px-2">
@@ -137,8 +137,6 @@
                     'https://source.unsplash.com/500x500?face-woman-'.rand(1,20),
                     'https://source.unsplash.com/500x500?face-woman-'.rand(1,20),
                     'https://source.unsplash.com/500x500?face-woman-'.rand(1,20),];
-
-            $user=App\Models\User::first();
             @endphp
 
             {{-- Carousel section --}}
@@ -201,9 +199,9 @@
             <section class="grid gap-4 p-3">
 
                 <div class="flex items-center text-3xl gap-3 text-wrap">
-                    <h3 class="font-bold"> {{$user->name}} </h3>
+                    <h3 class="font-bold"> {{$receiver->name}} </h3>
                     <span class="font-semibold text-gray-800">
-                        {{$user->age}}
+                        {{$receiver->age}}
                     </span>
                 </div>
 
@@ -211,14 +209,14 @@
 
                 <ul>
                     <li class="items-center text-gray-600 text-lg">
-                        {{$user->profession}}
+                        {{$receiver->profession}}
                     </li>
                     <li class="items-center text-gray-600 text-lg">
-                        {{$user->height?$user->height.' cm':''}}
+                        {{$receiver->height?$receiver->height.' cm':''}}
                     </li>
                     <li class="items-center text-gray-600 text-lg">
                         Lives in Spain
-                        {{$user->city?'Lives in '.$user->city:''}}
+                        {{$receiver->city?'Lives in '.$receiver->city:''}}
                     </li>
                 </ul>
 
@@ -227,7 +225,7 @@
                 {{-- bio --}}
 
                 <p class="text-gray-600">
-                    {{$user->about}}
+                    {{$receiver->about}}
                 </p>
 
                 {{-- Relatioship goals --}}
@@ -237,7 +235,7 @@
                     <div class="grid w-4/5">
                         <span class="font-bold text-sm text-green-800">Looking for </span>
                         <span class="text-lg text-green-800 capitalize"> {{str_replace('_','
-                            ',$user->relationship_goals?->value)}} </span>
+                            ',$receiver->relationship_goals?->value)}} </span>
 
                     </div>
                 </div>
@@ -246,12 +244,12 @@
 
                 <section class="divide-y space-y-2">
 
-                    @if ($user->languages)
+                    @if ($receiver->languages)
 
                     <div class="spacey-y-3 py-2">
                         <h3 class="font-bold text-xl py-2"> Languages i know </h3>
                         <ul class="flex flex-wrap gap-3">
-                            @foreach ($user->languages as $language )
+                            @foreach ($receiver->languages as $language )
                             <li class="border border-gray-500 rounded-2xl text-sm px-2.5 p-1.5 capitalize">
                                 {{$language->name}}</li>
                             @endforeach
@@ -261,11 +259,11 @@
                     </div>
                     @endif
 
-                    @if ($user->basics)
+                    @if ($receiver->basics)
                     <div class="spacey-y-3 py-2">
                         <h3 class="font-bold text-xl py-2"> Basics </h3>
                         <ul class="flex flex-wrap gap-3">
-                            @foreach ($user->basics as $basic )
+                            @foreach ($receiver->basics as $basic )
                             <li class="border border-gray-500 rounded-2xl text-sm px-2.5 p-1.5">{{$basic->name}}
                             </li>
                             @endforeach
