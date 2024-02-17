@@ -4,6 +4,7 @@ namespace App\Livewire\Chat;
 
 use App\Models\Conversation;
 use App\Models\Message;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Chat extends Component
@@ -34,6 +35,9 @@ class Chat extends Component
 
          $this->reset('body');
 
+         #dispatch event to scroll chat to bottom
+         $this->dispatch('scroll-bottom');
+
          #push the message
          $this->loadedMessages->push($createdMessage);
 
@@ -47,6 +51,20 @@ class Chat extends Component
 
     }
 
+
+    #[On('loadMore')]
+    function loadMore()  {
+
+        #increment
+        $this->paginate_var +=10;
+
+        #call the loadMessages()
+        $this->loadMessages();
+
+        #dispatch event
+        $this->dispatch('update-height');
+
+    }
 
     function loadMessages()  {
 
