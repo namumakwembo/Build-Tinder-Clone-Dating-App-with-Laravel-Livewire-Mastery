@@ -9,6 +9,16 @@ use Livewire\Component;
 class Tabs extends Component
 {
 
+
+    protected $listeners=['new-message-created'=>'$refresh'];
+    public $selectedConversationId;
+
+    function mount()  {
+
+        $this->selectedConversationId= request()->chat;
+        
+    }
+
     public function createConversation(SwipeMatch $match)
     {
         $receiver = $match->swipe1->user_id == auth()->id() ? $match->swipe2->user : $match->swipe1->user;
@@ -24,7 +34,7 @@ class Tabs extends Component
     public function render()
     {
         $matches = auth()->user()->matches()->get();
-        $conversations= auth()->user()->conversations()->get();
+        $conversations= auth()->user()->conversations()->latest('updated_at')->get();
         return view('livewire.components.tabs', ['matches' => $matches,'conversations'=>$conversations]);
     }
 }

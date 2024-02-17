@@ -51,9 +51,13 @@
 
         {{-- body --}}
         <section
-            class="flex flex-col gap-5 overflow-auto h-full p-2.5 overflow-y-auto flex-grow overflow-x-hidden w-full my-auto">
+            class="flex flex-col gap-2 overflow-auto h-full p-2.5 overflow-y-auto flex-grow overflow-x-hidden w-full my-auto">
 
-            @for ($i = 0; $i < 12; $i++) @php $belongsToAuth=fake()->randomElement([true,false]);
+             @foreach ($loadedMessages as $message)
+                 
+          
+                @php 
+                $belongsToAuth=$message->sender_id==auth()->id();
                 @endphp
 
                 <div @class([ 'max-w-[85%] md:max-w-[78%] flex w-auto gap-2 relative mt-2' , 'ml-auto'=>$belongsToAuth
@@ -72,11 +76,7 @@
                         ])>
 
                         <p class="whitespace-normal text-sm md:text-base tracking-wide lg:tracking-normal">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil maxime vel officia
-                            perspiciatis,
-                            repellat molestias cumque atque nam debitis animi eum, deserunt cum, aliquid dignissimos
-                            nemo
-                            similique culpa quaerat tenetur.
+                           {{$message->body}}
                         </p>
 
                     </div>
@@ -85,14 +85,14 @@
 
                 </div>
 
-                @endfor
+                @endforeach
 
         </section>
 
         {{-- footer --}}
         <footer class="sticky bottom py-2 inset-x-0  p-2">
 
-            <form x-data="{body:@entangle('body')}" autocomplete="off">
+            <form x-data="{body:@entangle('body')}" @submit.prevent="$wire.sendMessage()" autocomplete="off">
                 @csrf
                 {{-- hidden input --}}
                 <input type="hidden" autocomplete="false" style="display: none">

@@ -3,6 +3,7 @@
 namespace App\Livewire\Chat;
 
 use App\Models\Conversation;
+use App\Models\Message;
 use Livewire\Component;
 
 class Chat extends Component
@@ -11,6 +12,57 @@ class Chat extends Component
     public $conversation;
     public $receiver;
 
+    public $body;
+
+    public $loadedMessages;
+    public $paginate_var=10;
+
+
+    function sendMessage()  {
+         #check auth
+         abort_unless(auth()->check(),401);
+
+         $this->validate(['body'=>'required|string']);
+
+         #create message
+         $createdMessage= Message::create([
+            'conversation_id'=>$this->conversation->id,
+            'sender_id'=>auth()->id(),
+            'receiver_id'=>$this->receiver->id,
+            'body'=>$this->body
+         ]);
+
+         $this->reset('body');
+
+         #push the message
+         $this->loadedMessages->push($createdMessage);
+
+         #update the conversation model
+         $this->conversation->updated_at=now();
+         $this->conversation->save();
+
+         #dispatch event
+         $this->dispatch('new-message-created');
+
+
+    }
+
+
+    function loadMessages()  {
+
+        #get count
+        $count=Message::where('conversation_id',$this->conversation->id)->count();
+
+        #skip and query 
+        $this->loadedMessages= Message::where('conversation_id',$this->conversation->id)
+                                        ->skip($count- $this->paginate_var)
+                                        ->take($this->paginate_var)
+                                        ->get();
+
+        return $this->loadedMessages;
+
+        
+    }
 
     function mount()  {
 
@@ -29,6 +81,8 @@ class Chat extends Component
 
         #set receiever
         $this->receiver= $this->conversation->getReceiver();
+
+        $this->loadMessages();
                                  
 
         

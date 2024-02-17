@@ -70,7 +70,8 @@
                     
                    <li>
                        <a 
-                        @class(['flex gap-4 items-center p-2','border-r-4 border-red-500 bg-white py-3'=>request()->chat==$conversation->id])
+                        wire:navigate
+                        @class(['flex gap-4 items-center p-2','border-r-4 border-red-500 bg-white py-3'=>$selectedConversationId==$conversation->id])
                          href="{{route('chat',$conversation->id)}}">
 
                          <div class="relative">
