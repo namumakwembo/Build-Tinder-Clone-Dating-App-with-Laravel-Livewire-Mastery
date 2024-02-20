@@ -118,7 +118,9 @@ class="flex h-screen overflow-hidden">
                 $belongsToAuth=$message->sender_id==auth()->id();
                 @endphp
 
-                <div @class([ 'max-w-[85%] md:max-w-[78%] flex w-auto gap-2 relative mt-2' , 'ml-auto'=>$belongsToAuth
+                <div
+                 wire:ignore
+                 @class([ 'max-w-[85%] md:max-w-[78%] flex w-auto gap-2 relative mt-2' , 'ml-auto'=>$belongsToAuth
 
                     ]) >
 
