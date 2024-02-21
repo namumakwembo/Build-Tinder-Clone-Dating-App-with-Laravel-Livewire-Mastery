@@ -4,6 +4,8 @@ namespace App\Livewire\Chat;
 
 use App\Models\Conversation;
 use App\Models\Message;
+use App\Models\SwipeMatch;
+use App\Notifications\MessageSentNotification;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -18,6 +20,32 @@ class Chat extends Component
     public $loadedMessages;
     public $paginate_var=10;
 
+
+    function listenBroadcastedMessage($event)  {
+
+
+        $this->dispatch('scroll-bottom');
+
+        $newMessage = Message::find($event['message_id']);
+
+
+        #push messsage
+        $this->loadedMessages->push($newMessage);
+
+        #mark message as read
+        $newMessage->read_at= now();
+        $newMessage->save();
+
+        #refresh chat list 
+
+        $this->dispatch('new-message-created');
+
+
+
+
+
+        
+    }
 
     function sendMessage()  {
          #check auth
@@ -48,6 +76,8 @@ class Chat extends Component
          #dispatch event
          $this->dispatch('new-message-created');
 
+         #broadcast out message
+         $this->receiver->notify(new MessageSentNotification(auth()->user(),$createdMessage,$this->conversation));
 
     }
 
@@ -82,8 +112,26 @@ class Chat extends Component
         
     }
 
+
+    function deleteMatch()  {
+
+        abort_unless(auth()->check(),401);
+
+        #make sure user belongs to match
+        $belongsToMatch = auth()->user()->matches()->where('swipe_matches.id',$this->conversation->match_id)->exists();
+        abort_unless($belongsToMatch,403);
+
+        #delete match 
+        SwipeMatch::where('id',$this->conversation->match_id)->delete();
+
+        #redirect
+        $this->redirect(route('chat.index'),navigate:true);
+        
+    }
+
     function mount()  {
 
+        
         #check auth
         abort_unless(auth()->check(),401);
 

@@ -6,9 +6,18 @@ x-data="{
 }"
 
 x-init="
-
     height= conversationElement.scrollHeight;
     $nextTick(()=>conversationElement.scrollTop=height);
+
+    Echo.private('users.{{auth()->id()}}')
+    .notification((notification) => {
+       if(notification['type']=='App\\Notifications\\MessageSentNotification' && notification['conversation_id']=={{$conversation->id}})
+       {
+
+        $wire.listenBroadcastedMessage(notification);
+
+       }
+    })
 
 "
 
@@ -187,7 +196,7 @@ class="flex h-screen overflow-hidden">
     </main>
 
     {{-- profile section --}}
-    <aside class="w-[48%] hidden sm:flex border">
+    <aside class="w-[50%] hidden sm:flex border">
 
         <div style="contain: content"
             class=" inset-0 overflow-y-auto overflow-hidden overscroll-contain  w-full  bg-white space-y-4">
@@ -342,6 +351,18 @@ class="flex h-screen overflow-hidden">
                     </div>
 
                 </section>
+
+
+                <button wire:confirm='are you sure '  wire:click="deleteMatch" class="py-6 border-y flex flex-col gap-2 text-gray-500 justify-center text-center items-center">
+
+                    <span class="font-bold">
+                        Unmatch
+                    </span>
+                    <span>
+                        No longer interested?, remove them from your matches
+                    </span>
+                </button>
+
 
 
 
