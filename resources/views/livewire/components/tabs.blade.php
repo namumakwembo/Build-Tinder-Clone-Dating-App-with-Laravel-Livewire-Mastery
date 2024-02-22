@@ -3,6 +3,19 @@
     <section 
         x-data="{ tab:{{request()->routeIs('chat.index')||request()->routeIs('chat')?'2':'1'}} }"
         @match-found.window="$wire.$refresh()"
+        x-init="
+
+        Echo.private('users.{{auth()->id()}}')
+        .notification((notification) => {
+           if(notification['type']=='App\\Notifications\\MessageSentNotification')
+           {
+    
+            $wire.$refresh();
+    
+           }
+        })
+        
+        "
         class="mb-auto overflow-y-auto h-full overflow-x-scroll relative">
 
        <header class="flex items-center gap-5 mb-2 p-4 sticky top-0 bg-white z-10">
@@ -56,7 +69,7 @@
 
                        {{-- name --}}
 
-                       <h5 class="absolute rounded-lg bottom-2 bo left-2 text-white font-bold text-xs">
+                       <h5 class="absolute rounded-lg bottom-2 bo left-2 text-white bg-black/60 p-2 font-bold text-[10px]">
                            {{$match->swipe1->user_id==auth()->id()?$match->swipe2->user->name:$match->swipe1->user->name }}
                        </h5>
                    </div>
