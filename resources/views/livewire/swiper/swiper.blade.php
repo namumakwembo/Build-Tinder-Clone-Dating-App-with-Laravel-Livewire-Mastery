@@ -717,11 +717,11 @@
 
                         <div class="flex items-center gap-4 mx-auto">
                             <span>
-                                <img src="https://source.unsplash.com/200x200?face-1" alt="" class="rounded-full h-32 w-32 ring ring-rose-500">
+                                <img src="https://source.unsplash.com/200x200?face-adult-man-{{rand(10,20)}}" alt="" class="rounded-full h-32 w-32 ring ring-rose-500">
                             </span>
 
                             <span>
-                                <img src="https://source.unsplash.com/200x200?face-2" alt="" class="rounded-full h-32 w-32 ring ring-pink-500/40">
+                                <img src="https://source.unsplash.com/200x200?face-adult-{{rand(20,30)}}" alt="" class="rounded-full h-32 w-32 ring ring-pink-500/40">
                             </span>
                         </div>
 

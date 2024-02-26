@@ -12,6 +12,7 @@ use Livewire\Component;
 
 class Swiper extends Component
 {
+    public $users;
 
     #[Locked]
     public $currentMatchId;
@@ -57,6 +58,12 @@ class Swiper extends Component
 
     protected function createSwipe($user,$type){
 
+        #remove element from collection
+        $this->users = $this->users->reject(function ($item) use ($user) {
+            return $item->id === $user->id;
+        });
+        
+
          #reset properties 
          $this->reset('swipedUserId','currentMatchId');
 
@@ -71,9 +78,7 @@ class Swiper extends Component
             'type'=>$type
         ]);
 
-
         #check if type if super like or swipe right 
-
         if ($type=='up'||$type=='right') {
 
             $authUserId=auth()->id();
@@ -130,10 +135,19 @@ class Swiper extends Component
 
 
     }
+    function mount()  {
+
+
+
+        $this->users= User::limit(10)->whereNotSwiped()->where('id','<>',auth()->id())->get();
+
+
+        
+    }
 
     public function render()
     {
-        $users= User::limit(10)->whereNotSwiped()->where('id','<>',auth()->id())->get();
-        return view('livewire.swiper.swiper',['users'=>$users]);
+
+        return view('livewire.swiper.swiper');
     }
 }
