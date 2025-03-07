@@ -13,6 +13,10 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
+        // Run daily at a specific time (e.g., 3:00 AM)
+    $schedule->command('db:refresh-seed')
+    ->dailyAt('03:00')
+    ->onOneServer(); // Optional: For multi-server setups
     }
 
     /**
