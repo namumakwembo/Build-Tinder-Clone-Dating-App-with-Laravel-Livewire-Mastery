@@ -135,13 +135,13 @@ class="flex h-screen overflow-hidden">
 
                     {{-- Avatar --}}
                     <div @class(['shrink-0 mt-auto','invisible'=>$belongsToAuth])>
-                        <x-avatar class="w-7 h-7" src="https://source.unsplash.com/200x200?face" />
+                        {{-- <x-avatar class="w-7 h-7" src="https://xsgames.co/randomusers/assets/avatars/female/'{{ $message->sender_id }}.jpg" /> --}}
                     </div>
 
                     {{-- Message body --}}
 
                     <div @class(['flex flex-wrap text-[15px] border border-gray-200/40 rounded-xl p-2.5 flex flex-col
-                        bg-[#f6f6f8fb]', 'bg-blue-500 text-white'=>$belongsToAuth
+                        bg-white', 'bg-rose-500 text-white'=>$belongsToAuth
                         ])>
 
                         <p class="whitespace-normal text-sm md:text-base tracking-wide lg:tracking-normal">
@@ -159,7 +159,7 @@ class="flex h-screen overflow-hidden">
         </section>
 
         {{-- footer --}}
-        <footer class="sticky bottom py-2 inset-x-0  p-2">
+        <footer class="sticky bottom py-2 inset-x-0 border-t bg-gray-50  p-2">
 
             <form x-data="{body:@entangle('body')}" @submit.prevent="$wire.sendMessage()" autocomplete="off">
                 @csrf
