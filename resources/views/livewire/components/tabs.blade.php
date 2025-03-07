@@ -64,8 +64,9 @@
                              </svg>
 
                        </span>
+                       {{-- $slides=['https://xsgames.co/randomusers/assets/avatars/female/'.rand(0,79).'.jpg','https://xsgames.co/randomusers/assets/avatars/female/'.rand(0,79).'.jpg','https://xsgames.co/randomusers/assets/avatars/female/'.rand(0,79).'.jpg'] --}}
 
-                       <img src=" https://source.unsplash.com/200x200?adult-face-woman-{{$i}}" alt="image" class="h-36 rounded-lg object-cover">
+                       <img src="https://xsgames.co/randomusers/assets/avatars/female/{{$i}}.jpg" alt="image" class="h-36 rounded-lg object-cover">
 
                        {{-- name --}}
 
@@ -113,7 +114,7 @@
 
                            </span>
 
-                           <x-avatar class="h-14 w-14" src="https://source.unsplash.com/200x200?adult-face-woman-{{$i}}"  />
+                           <x-avatar class="h-14 w-14"  src="https://xsgames.co/randomusers/assets/avatars/female/{{$i}}.jpg"   />
 
                          </div>
 

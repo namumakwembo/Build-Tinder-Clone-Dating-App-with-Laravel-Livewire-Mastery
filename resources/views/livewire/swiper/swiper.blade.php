@@ -1,9 +1,9 @@
 <div class="m-auto md:p-10 w-full h-full relative">
 
-    <div class="relative h-full  md:h-[600px] w-full md:w-96 m-auto">
+    <div class="relative h-full  md:h-[600px] flex flex-col w-full md:w-96 m-auto">
 
 
-        @foreach ($users as $i=> $user)
+        @forelse ($users as $i=> $user)
 
         <div @swipedright.window="console.log('right')" @swipedleft.window="console.log('left')"
             @swipedup.window="console.log('up')" wire:key="swipe-{{$user->id}}" x-data="{
@@ -208,7 +208,7 @@
                 class="relative overflow-hidden w-full h-full rounded-xl bg-cover bg-white">
 
                 @php
-                $slides=['https://source.unsplash.com/500x500?face-woman-'.rand(1,20),'https://source.unsplash.com/500x500?face-woman-'.rand(1,20),'https://source.unsplash.com/500x500?face-woman-'.rand(1,20),]
+                $slides=['https://xsgames.co/randomusers/assets/avatars/female/'.rand(0,79).'.jpg','https://xsgames.co/randomusers/assets/avatars/female/'.rand(0,79).'.jpg','https://xsgames.co/randomusers/assets/avatars/female/'.rand(0,79).'.jpg']
                 @endphp
 
                 {{-- Carousel section --}}
@@ -222,7 +222,8 @@
                     </template>
 
                     {{-- pagination --}}
-                    <div draggable="true" :class="{'hidden':slides.length==1}"
+                    <div draggable="true" 
+                        :class="slides.length==1?'hidden':''"
                         class="absolute top-1 inset-x-0 z-10 w-full flex items-center justify-center">
 
                         <template x-for="(image,index) in slides" :key="index">
@@ -238,7 +239,8 @@
                     </div>
 
                     {{-- Prev button --}}
-                    <button draggable="true" :class="{'hidden':slides.length==1}"
+                    <button draggable="true" 
+                     :class="slides.length==1?'hidden':''"
                         @click="activeSlide = activeSlide ===1? slides.length:activeSlide-1"
                         class="absolute left-2 top-1/2 my-auto ">
 
@@ -251,7 +253,8 @@
                     </button>
 
                     {{-- Next button --}}
-                    <button draggable="true" :class="{'hidden':slides.length==1}"
+                    <button draggable="true" 
+                                :class="slides.length==1?'hidden':''"
                         @click="activeSlide = activeSlide === slides.length ? 1 : activeSlide +1"
                         class="absolute right-2 top-1/2 my-auto ">
 
@@ -431,7 +434,8 @@
 
 
                 @php
-                $slides=['https://source.unsplash.com/500x500?face-woman-'.rand(1,20),'https://source.unsplash.com/500x500?face-woman-'.rand(1,20),'https://source.unsplash.com/500x500?face-woman-'.rand(1,20),]
+                $slides=['https://xsgames.co/randomusers/assets/avatars/female/'.rand(0,79).'.jpg','https://xsgames.co/randomusers/assets/avatars/female/'.rand(0,79).'.jpg','https://xsgames.co/randomusers/assets/avatars/female/'.rand(0,79).'.jpg']
+
                 @endphp
 
                 {{-- Carousel section --}}
@@ -445,7 +449,8 @@
                     </template>
 
                     {{-- pagination --}}
-                    <div draggable="true" :class="{'hidden':slides.length==1}"
+                    <div draggable="true" 
+                       :class="slides.length==1?'hidden':''"
                         class="absolute top-1 inset-x-0 z-10 w-full flex items-center justify-center">
 
                         <template x-for="(image,index) in slides" :key="index">
@@ -461,7 +466,8 @@
                     </div>
 
                     {{-- Prev button --}}
-                    <button draggable="true" :class="{'hidden':slides.length==1}"
+                    <button draggable="true"
+                       :class="slides.length==1?'hidden':''"
                         @click="activeSlide = activeSlide ===1? slides.length:activeSlide-1"
                         class="absolute left-2 top-1/2 my-auto ">
 
@@ -474,7 +480,8 @@
                     </button>
 
                     {{-- Next button --}}
-                    <button draggable="true" :class="{'hidden':slides.length==1}"
+                    <button draggable="true" 
+                       :class="slides.length==1?'hidden':''"
                         @click="activeSlide = activeSlide === slides.length ? 1 : activeSlide +1"
                         class="absolute right-2 top-1/2 my-auto ">
 
@@ -661,7 +668,37 @@
             </div>
 
         </div>
-        @endforeach
+
+
+        
+        @empty
+
+        <div class="flex items-center flex-col gap-6 my-auto  ">
+            <span class="border-2 rounded-full p-5">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.8" stroke="currentColor" class="w-20 h-20">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                  </svg>
+                  
+            </span>
+            <p>
+                To use Tinder, you need to enable your location sharing so we can show you who's around.
+                Visit your  browser settings or FAQ page to learn how.
+            </p>
+            <p>
+                For the best experience, check out our mobile apps below!
+            </p>
+
+            <div class="grid grid-cols-2 items-center">
+
+                <img class="h-28 w-full object-scale-down" src="{{ asset('assets/download-app-store.png') }}" alt="">
+                <img class="h-24 w-full object-scale-down" src="{{ asset('assets/download-google-play.png') }}" alt="">
+
+            </div>
+            
+        </div>
+       
+        @endforelse
 
 
     </div>
@@ -717,11 +754,11 @@
 
                         <div class="flex items-center gap-4 mx-auto">
                             <span>
-                                <img src="https://source.unsplash.com/200x200?face-adult-man-{{rand(10,20)}}" alt="" class="rounded-full h-32 w-32 ring ring-rose-500">
+                                <img src="https://xsgames.co/randomusers/assets/avatars/male/{{rand(10,20)}}.jpg" alt="" class="rounded-full h-32 w-32 ring ring-rose-500">
                             </span>
 
                             <span>
-                                <img src="https://source.unsplash.com/200x200?face-adult-{{rand(20,30)}}" alt="" class="rounded-full h-32 w-32 ring ring-pink-500/40">
+                                <img src="https://xsgames.co/randomusers/assets/avatars/female/{{rand(10,20)}}.jpg" alt="" class="rounded-full h-32 w-32 ring ring-pink-500/40">
                             </span>
                         </div>
 

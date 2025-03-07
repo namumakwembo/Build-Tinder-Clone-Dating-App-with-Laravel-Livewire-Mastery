@@ -202,10 +202,8 @@ class="flex h-screen overflow-hidden">
             class=" inset-0 overflow-y-auto overflow-hidden overscroll-contain  w-full  bg-white space-y-4">
 
             @php
-            $slides=[
-                    'https://source.unsplash.com/500x500?face-woman-'.rand(1,20),
-                    'https://source.unsplash.com/500x500?face-woman-'.rand(1,20),
-                    'https://source.unsplash.com/500x500?face-woman-'.rand(1,20),];
+                $slides=['https://xsgames.co/randomusers/assets/avatars/female/'.rand(0,79).'.jpg','https://xsgames.co/randomusers/assets/avatars/female/'.rand(0,79).'.jpg','https://xsgames.co/randomusers/assets/avatars/female/'.rand(0,79).'.jpg']
+
             @endphp
 
             {{-- Carousel section --}}
