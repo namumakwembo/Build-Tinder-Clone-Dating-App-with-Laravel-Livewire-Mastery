@@ -14,9 +14,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         // Run daily at a specific time (e.g., 3:00 AM)
-    $schedule->command('db:refresh-seed')
-    ->dailyAt('03:00')
-    ->onOneServer(); // Optional: For multi-server setups
+        $schedule->command('migrate:fresh --seed')->twiceDaily(0, 12);
     }
 
     /**

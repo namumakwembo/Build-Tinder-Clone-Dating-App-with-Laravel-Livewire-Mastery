@@ -26,12 +26,23 @@ new #[Layout('layouts.guest')] class extends Component
             navigate: true
         );
     }
+
+    public function mount(): void
+    {
+
+        $this->form->email = 'test@example.com'; // Set default email
+        $this->form->password = 'password'; // Set default email
+    }
+
 }; ?>
 
 <div>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
+    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+        <span class="font-medium">Note!</span>  All data is deleted and reset after 12 hours
+      </div>
     <form wire:submit="login">
         <!-- Email Address -->
         <div>

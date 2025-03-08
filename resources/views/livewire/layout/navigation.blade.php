@@ -56,9 +56,18 @@ new class extends Component
                         Language
                     </button>
 
+                    @auth
+                        
+                    <a class="rounded-xl bg-white px-5 py-2 flex items-center justify-center font-bold my-auto" href="{{route('app')}}">
+                        App
+                    </a>
+                    @else
                     <a class="rounded-xl bg-white px-5 py-2 flex items-center justify-center font-bold my-auto" href="{{route('login')}}">
                         Login
                     </a>
+                    @endauth
+
+                
 
 
                 </div>

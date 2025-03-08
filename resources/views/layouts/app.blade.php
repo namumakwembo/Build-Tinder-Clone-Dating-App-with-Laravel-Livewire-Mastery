@@ -23,7 +23,7 @@
         <div class="flex flex-1 overflow-hidden">
 
             {{-- sidebar --}}
-            <aside class=" hidden md:flex flex-col bg-gray-100 sm:w-[22rem] w-full">
+            <aside class=" hidden md:flex flex-col bg-gray-100 border-r sm:w-[22rem] w-full">
 
                 <header class="bg-tinder  py-5 flex items-center p-2.5 sticky top-0 z-50 ">
 
@@ -37,7 +37,7 @@
                         class="relative ">
                     
                   
-                        <x-avatar @click="dropdownOpen=true" class="w-10 h-10" />
+                        <x-avatar @click="dropdownOpen=true" class="w-10 h-10 cursor-pointer" />
 
                     
                         <div x-show="dropdownOpen" 
@@ -50,7 +50,7 @@
                             <div class="p-1 mt-1 z-50 bg-white border rounded-md shadow-md border-neutral-200/70 text-neutral-700">
                                 <div class="px-2 py-1.5 text-sm font-semibold">My Account</div>
                                 <div class="h-px my-1 -mx-1 bg-neutral-200"></div>
-                                <a href="#_" class="relative flex cursor-default select-none hover:bg-neutral-100 items-center rounded px-2 py-1.5 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+                                <a href="{{ route('profile') }}" class="relative flex cursor-default select-none hover:bg-neutral-100 items-center rounded px-2 py-1.5 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 mr-2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                                     <span>Profile</span>
                                     <span class="ml-auto text-xs tracking-widest opacity-60">⇧⌘P</span>
