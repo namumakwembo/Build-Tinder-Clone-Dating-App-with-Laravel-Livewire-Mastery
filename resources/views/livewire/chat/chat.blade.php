@@ -141,7 +141,9 @@ class="flex h-screen overflow-hidden">
                     {{-- Message body --}}
 
                     <div @class(['flex flex-wrap text-[15px] border border-gray-200/40 rounded-xl p-2.5 flex flex-col
-                        bg-white', 'bg-red-500 text-white'=>$belongsToAuth
+                       ', 
+                        'bg-red-500 text-white'=>$belongsToAuth,
+                        'text-black bg-white'=>!$belongsToAuth
                         ])>
 
                         <p class="whitespace-normal text-sm md:text-base tracking-wide lg:tracking-normal">
